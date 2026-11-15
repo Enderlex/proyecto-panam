@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Método de pago | Panam</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body { background: #ffffff; color: #000000; }
+
+        .pago { max-width: 700px; margin: 0 auto; padding: 3rem 2rem; }
+        .pago h1 { color: #e63946; margin-bottom: 1.5rem; }
+
+        .campo { margin-bottom: 1.2rem; }
+        .campo label { display: block; font-weight: bold; font-size: 1.05rem; margin-bottom: 0.3rem; color: #000; }
+        .campo input[type="text"],
+        .campo input[type="date"] {
+            width: 100%; padding: 0.7rem 0.9rem;
+            border: 1px solid #ccc; border-radius: 5px;
+            font-size: 1rem; color: #000; background: #fff;
+        }
+        .campo input:focus { outline: none; border-color: #e63946; }
+
+        .opciones label { display: block; font-weight: normal; margin-bottom: 0.6rem; cursor: pointer; }
+
+        .botones { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 2rem; }
+        .botones input {
+            padding: 0.9rem 1.6rem; border: none; border-radius: 5px;
+            font-weight: bold; font-size: 1rem; cursor: pointer;
+            background: rgb(255, 5, 5); color: #000;
+        }
+        .botones input:hover { opacity: 0.85; }
+
+        .mensaje-gracias {
+            display: none; margin-top: 1.5rem; padding: 1rem;
+            border-radius: 5px; background: #e8f5e9; color: #1b5e20;
+            font-weight: bold; text-align: center; font-size: 1.1rem;
+        }
+        .mensaje-gracias.visible { display: block; }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">
+                <img src="logo1.png" alt="Logo Panam">
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="acerca.html">Acerca</a></li>
+                <li><a href="catalogo.html">Catálogo</a></li>
+                <li><a href="color.html">Prototipo</a></li>
+                <li><a href="dt.html">Registro</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="pago">
+       
+
+        <form id="formPago" action="DT.php" method="post">
+            <div class="campo">
+                <label for="nombre">NOMBRE:</label>
+                <input type="text" id="nombre" name="NOMBRE">
+            </div>
+            <div class="campo">
+                <label for="telefono">TELÉFONO:</label>
+                <input type="text" id="telefono" name="TELEFONO">
+            </div>
+            <div class="campo">
+                <label for="ubicacion">UBICACIÓN:</label>
+                <input type="text" id="ubicacion" name="UBICACION">
+            </div>
+            <div class="campo">
+                <label for="cp">CÓDIGO POSTAL:</label>
+                <input type="text" id="cp" name="CP">
+            </div>
+            <div class="campo">
+                <label for="ubicacion2">UBICACIÓN:</label>
+                <input type="text" id="ubicacion2" name="UBICACION">
+            </div>
+            <div class="campo">
+                <label for="precio">PRECIO:</label>
+                <input type="text" id="precio" name="PECIO">
+            </div>
+            <div class="campo">
+                <label for="cantidad">CANTIDAD:</label>
+                <input type="text" id="cantidad" name="CANTIDAD">
+            </div>
+            <div class="campo">
+                <label for="fdc">FECHA DE COMPRA:</label>
+                <input type="date" id="fdc" name="FDC">
+            </div>
+            <div class="campo">
+                <label for="modelo">MODELO:</label>
+                <input type="text" id="modelo" name="MODELO">
+            </div>
+
+            <div class="campo opciones">
+                <label>TIPO DE PAGO:</label>
+                <label><input type="radio" name="PAGO" value="TARJETA"> TARJETA</label>
+                <label><input type="radio" name="PAGO" value="EFECTIVO"> EFECTIVO</label>
+            </div>
+
+            <div class="botones">
+                <input type="submit" value="REGISTRAR" name="btninsertar">
+                <input type="reset" value="LIMPIAR FORMULARIO" name="btnborrar">
+            </div>
+
+            <p id="mensajeGracias" class="mensaje-gracias" role="status"></p>
+        </form>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Panam Proyecto cultura empresarial Lexian Ortega Zurita. Todos los derechos reservados.</p>
+    </footer>
+
+<script>
+var formPago = document.getElementById('formPago');
+var mensajeGracias = document.getElementById('mensajeGracias');
+
+formPago.addEventListener('submit', function (e) {
+    e.preventDefault();
+    mensajeGracias.textContent = '✔ ¡Gracias por registrarte!';
+    mensajeGracias.classList.add('visible');
+    formPago.reset();
+
+    setTimeout(function () {
+        mensajeGracias.classList.remove('visible');
+    }, 5000);
+});
+</script>
+</body>
+</html>
