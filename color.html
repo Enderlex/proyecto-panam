@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prototipo | Panam</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        #colorear { max-width: 1200px; margin: 0 auto; padding: 3rem 2rem; }
+        #colorear h1 { text-align: center; margin-bottom: 0.5rem; }
+        .subtitulo { text-align: center; color: #555; margin-bottom: 2rem; }
+
+        .layout { display: grid; grid-template-columns: 1fr 280px; gap: 2rem; align-items: start; }
+
+        .lienzo { max-width: 800px; margin: 0 auto; border: 1px solid #ddd; border-radius: 12px; padding: 1rem; box-shadow: 0 4px 15px rgba(0,0,0,0.12); background: #fff; }
+        .lienzo canvas { width: 100%; height: auto; display: block; cursor: pointer; }
+        .estado { text-align: center; color: #555; font-size: 0.95rem; margin-top: 0.5rem; }
+        .estado.error { color: #c1121f; font-weight: bold; }
+
+        .paleta { display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center; align-items: center; margin: 1.2rem 0; }
+        .color { width: 36px; height: 36px; border-radius: 50%; border: 3px solid #fff; box-shadow: 0 0 0 1px #999; cursor: pointer; padding: 0; }
+        .color.activo { box-shadow: 0 0 0 3px #111; }
+        #personalizado { width: 44px; height: 36px; border: none; background: none; cursor: pointer; padding: 0; }
+
+        .acciones { display: flex; flex-wrap: wrap; gap: 0.8rem; justify-content: center; }
+        .acciones .cta-button { margin-top: 0; border: none; cursor: pointer; font-size: 1rem; }
+        .cta-button.secundario { background-color: #111; }
+
+        .galeria { border: 1px solid #ddd; border-radius: 12px; padding: 1rem; background: #f4f4f4; }
+        .galeria h2 { font-size: 1.2rem; margin-bottom: 1rem; text-align: center; }
+        .galeria-vacia { text-align: center; color: #777; font-size: 0.9rem; }
+        .item { background: #fff; border-radius: 10px; padding: 0.6rem; margin-bottom: 1rem; box-shadow: 0 2px 6px rgba(0,0,0,0.12); }
+        .item img { width: 100%; height: auto; display: block; }
+        .item-botones { display: flex; gap: 0.5rem; margin-top: 0.5rem; }
+        .item-botones button { flex: 1; padding: 0.4rem; border: 1px solid #ccc; border-radius: 5px; background: #fff; cursor: pointer; font-size: 0.85rem; }
+        .item-botones button:hover { border-color: #e63946; color: #e63946; }
+
+        @media (max-width: 800px) {
+            .layout { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">
+                <img src="logo1.png" alt="Logo Panam">
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="acerca.html">Acerca</a></li>
+                <li><a href="https://panam.com.mx/collections/lo-mas-nuevo" target="_blank" rel="noopener">Catálogo</a></li>
+                <li><a href="prototipo.html">Prototipo</a></li>
+                <li><a href="index.html#registro">Registro</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="colorear">
+            <h1>Prototipo: colorea tu Panam</h1>
+            <p class="subtitulo">Elige un color y toca una zona del tenis para pintarla. Cada zona se pinta por separado.</p>
+
+            <div class="layout">
+                <div>
+                    <div class="lienzo">
+                        <canvas id="lienzoTenis" width="1200" height="460"></canvas>
+                        <p class="estado" id="estado">Cargando tenis...</p>
+                    </div>
+
+                    <div class="paleta" id="paleta">
+                        <button type="button" class="color activo" data-color="#e63946" style="background:#e63946" aria-label="Rojo"></button>
+                        <button type="button" class="color" data-color="#f4a300" style="background:#f4a300" aria-label="Naranja"></button>
+                        <button type="button" class="color" data-color="#ffd60a" style="background:#ffd60a" aria-label="Amarillo"></button>
+                        <button type="button" class="color" data-color="#2a9d8f" style="background:#2a9d8f" aria-label="Verde"></button>
+                        <button type="button" class="color" data-color="#0a4d8c" style="background:#0a4d8c" aria-label="Azul"></button>
+                        <button type="button" class="color" data-color="#7b2cbf" style="background:#7b2cbf" aria-label="Morado"></button>
+                        <button type="button" class="color" data-color="#ff69b4" style="background:#ff69b4" aria-label="Rosa"></button>
+                        <button type="button" class="color" data-color="#8d5524" style="background:#8d5524" aria-label="Café"></button>
+                        <button type="button" class="color" data-color="#111111" style="background:#111111" aria-label="Negro"></button>
+                        <button type="button" class="color" data-color="#9e9e9e" style="background:#9e9e9e" aria-label="Gris"></button>
+                        <button type="button" class="color" data-color="#ffffff" style="background:#ffffff" aria-label="Blanco"></button>
+                        <input type="color" id="personalizado" value="#e63946" aria-label="Elegir otro color">
+                    </div>
+
+                    <div class="acciones">
+                        <button type="button" class="cta-button" id="btnGuardar">Guardar en la galería</button>
+                        <button type="button" class="cta-button secundario" id="btnDescargar">Descargar imagen</button>
+                        <button type="button" class="cta-button secundario" id="btnReiniciar">Empezar de nuevo</button>
+                    </div>
+                </div>
+
+                <aside class="galeria">
+                    <h2>Mis diseños</h2>
+                    <div id="galeria"></div>
+                </aside>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Proyecto cultura empresarial Lexian Ortega Zurita. Panam. Todos los derechos reservados.</p>
+    </footer>
+
+<script>
+var IMAGEN = 'teniscolor.png';   /* el dibujo en blanco y negro */
+var CLAVE = 'panam_galeria_v2';
+
+var canvas = document.getElementById('lienzoTenis');
+var ctx = canvas.getContext('2d');
+var estado = document.getElementById('estado');
+var paleta = document.getElementById('paleta');
+var selector = document.getElementById('personalizado');
+var galeria = document.getElementById('galeria');
+
+var colorActual = '#e63946';
+var guardados = [];
+
+var W = 0, H = 0;
+var zona = null;          /* a qué zona pertenece cada pixel */
+var listas = [];          /* pixeles de cada zona */
+var fondo = 0;            /* la zona de afuera del tenis (no se pinta) */
+var lineaCanvas = null;   /* el dibujo de lineas */
+var capaColor = null, ctxColor = null, datosColor = null;
+
+/* ---------- Paleta ---------- */
+paleta.addEventListener('click', function (e) {
+    var boton = e.target.closest('.color');
+    if (!boton) return;
+    colorActual = boton.getAttribute('data-color');
+    paleta.querySelectorAll('.color').forEach(function (b) { b.classList.remove('activo'); });
+    boton.classList.add('activo');
+});
+
+selector.addEventListener('input', function () {
+    colorActual = selector.value;
+    paleta.querySelectorAll('.color').forEach(function (b) { b.classList.remove('activo'); });
+});
+
+/* ---------- Cargar la imagen ---------- */
+var img = new Image();
+img.onload = iniciar;
+img.onerror = function () {
+    estado.className = 'estado error';
+    estado.textContent = 'No se encontró ' + IMAGEN + '. Guárdala en la misma carpeta que prototipo.html.';
+};
+img.src = IMAGEN;
+
+/* ---------- Preparar las zonas ---------- */
+function dilatar(mask, w, h, r) {
+    var tmp = new Uint8Array(w * h);
+    var out = new Uint8Array(w * h);
+    var pref = new Int32Array(Math.max(w, h) + 1);
+    var x, y, a, b;
+    for (y = 0; y < h; y++) {
+        pref[0] = 0;
+        for (x = 0; x < w; x++) pref[x + 1] = pref[x] + mask[y * w + x];
+        for (x = 0; x < w; x++) {
+            a = Math.max(0, x - r); b = Math.min(w - 1, x + r);
+            tmp[y * w + x] = (pref[b + 1] - pref[a]) > 0 ? 1 : 0;
+        }
+    }
+    for (x = 0; x < w; x++) {
+        pref[0] = 0;
+        for (y = 0; y < h; y++) pref[y + 1] = pref[y] + tmp[y * w + x];
+        for (y = 0; y < h; y++) {
+            a = Math.max(0, y - r); b = Math.min(h - 1, y + r);
+            out[y * w + x] = (pref[b + 1] - pref[a]) > 0 ? 1 : 0;
+        }
+    }
+    return out;
+}
+
+function iniciar() {
+    var esc = Math.max(1, Math.round(1200 / img.naturalWidth));
+    W = img.naturalWidth * esc;
+    H = img.naturalHeight * esc;
+    canvas.width = W;
+    canvas.height = H;
+
+    lineaCanvas = document.createElement('canvas');
+    lineaCanvas.width = W;
+    lineaCanvas.height = H;
+    var lctx = lineaCanvas.getContext('2d');
+    lctx.fillStyle = '#ffffff';
+    lctx.fillRect(0, 0, W, H);
+    lctx.imageSmoothingQuality = 'high';
+    lctx.drawImage(img, 0, 0, W, H);
+
+    var datos;
+    try {
+        datos = lctx.getImageData(0, 0, W, H).data;
+    } catch (e) {
+        estado.className = 'estado error';
+        estado.textContent = 'Abre la página con Live Server (clic derecho en el archivo, "Open with Live Server").';
+        return;
+    }
+
+    var N = W * H;
+    var i, p, x, y;
+
+    /* 1. donde hay linea (oscuro) */
+    var oscuro = new Uint8Array(N);
+    for (i = 0; i < N; i++) {
+        var gris = 0.299 * datos[i * 4] + 0.587 * datos[i * 4 + 1] + 0.114 * datos[i * 4 + 2];
+        oscuro[i] = gris < 150 ? 1 : 0;
+    }
+
+    /* 2. engrosar las lineas para cerrar huecos de las costuras punteadas */
+    var barrera = dilatar(oscuro, W, H, Math.round(1.5 * esc));
+
+    /* 3. separar zonas: cada espacio cerrado por lineas es una zona */
+    zona = new Int32Array(N);
+    var tam = [0];
+    var pila = new Int32Array(N);
+    var n = 0, sp, cuenta;
+    for (i = 0; i < N; i++) {
+        if (barrera[i] === 0 && zona[i] === 0) {
+            n++;
+            sp = 0; cuenta = 0;
+            pila[sp++] = i;
+            zona[i] = n;
+            while (sp > 0) {
+                p = pila[--sp];
+                cuenta++;
+                x = p % W; y = (p / W) | 0;
+                if (x > 0 && !barrera[p - 1] && !zona[p - 1]) { zona[p - 1] = n; pila[sp++] = p - 1; }
+                if (x < W - 1 && !barrera[p + 1] && !zona[p + 1]) { zona[p + 1] = n; pila[sp++] = p + 1; }
+                if (y > 0 && !barrera[p - W] && !zona[p - W]) { zona[p - W] = n; pila[sp++] = p - W; }
+                if (y < H - 1 && !barrera[p + W] && !zona[p + W]) { zona[p + W] = n; pila[sp++] = p + W; }
+            }
+            tam[n] = cuenta;
+        }
+    }
+
+    /* 4. las manchitas muy chicas (entre puntos de costura) se unen a la zona vecina */
+    var minimo = 150 * esc * esc / 4;
+    for (i = 0; i < N; i++) {
+        if (zona[i] > 0 && tam[zona[i]] < minimo) zona[i] = 0;
+    }
+
+    /* 5. los pixeles de las lineas y manchitas toman la zona mas cercana, sin huecos blancos */
+    var cola = new Int32Array(N);
+    var ini = 0, fin = 0;
+    for (i = 0; i < N; i++) { if (zona[i] > 0) cola[fin++] = i; }
+    while (ini < fin) {
+        p = cola[ini++];
+        x = p % W; y = (p / W) | 0;
+        var z = zona[p];
+        if (x > 0 && !zona[p - 1]) { zona[p - 1] = z; cola[fin++] = p - 1; }
+        if (x < W - 1 && !zona[p + 1]) { zona[p + 1] = z; cola[fin++] = p + 1; }
+        if (y > 0 && !zona[p - W]) { zona[p - W] = z; cola[fin++] = p - W; }
+        if (y < H - 1 && !zona[p + W]) { zona[p + W] = z; cola[fin++] = p + W; }
+    }
+
+    fondo = zona[0];
+
+    listas = [];
+    for (i = 0; i < N; i++) {
+        var zz = zona[i];
+        if (!listas[zz]) listas[zz] = [];
+        listas[zz].push(i);
+    }
+
+    /* capa donde se guardan los colores */
+    capaColor = document.createElement('canvas');
+    capaColor.width = W;
+    capaColor.height = H;
+    ctxColor = capaColor.getContext('2d');
+    datosColor = ctxColor.createImageData(W, H);
+    limpiarColores();
+
+    estado.className = 'estado';
+    estado.textContent = '';
+    componer();
+}
+
+/* ---------- Dibujar ---------- */
+function limpiarColores() {
+    var d = datosColor.data;
+    for (var i = 0; i < d.length; i++) d[i] = 255;
+    ctxColor.putImageData(datosColor, 0, 0);
+}
+
+function componer() {
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, W, H);
+    ctx.drawImage(capaColor, 0, 0);
+    ctx.globalCompositeOperation = 'multiply';
+    ctx.drawImage(lineaCanvas, 0, 0);
+    ctx.globalCompositeOperation = 'source-over';
+}
+
+function pintarZona(z, hex) {
+    var lista = listas[z];
+    if (!lista) return;
+    var r = parseInt(hex.substr(1, 2), 16);
+    var g = parseInt(hex.substr(3, 2), 16);
+    var b = parseInt(hex.substr(5, 2), 16);
+    var d = datosColor.data;
+    for (var k = 0; k < lista.length; k++) {
+        var o = lista[k] * 4;
+        d[o] = r; d[o + 1] = g; d[o + 2] = b; d[o + 3] = 255;
+    }
+    ctxColor.putImageData(datosColor, 0, 0);
+    componer();
+}
+
+canvas.addEventListener('click', function (e) {
+    if (!zona) return;
+    var rect = canvas.getBoundingClientRect();
+    var x = Math.floor((e.clientX - rect.left) * W / rect.width);
+    var y = Math.floor((e.clientY - rect.top) * H / rect.height);
+    if (x < 0 || y < 0 || x >= W || y >= H) return;
+    var z = zona[y * W + x];
+    if (z === fondo) return;
+    pintarZona(z, colorActual);
+});
+
+document.getElementById('btnReiniciar').addEventListener('click', function () {
+    if (!zona) return;
+    limpiarColores();
+    componer();
+});
+
+/* ---------- Galería ---------- */
+function cargar() {
+    try {
+        guardados = JSON.parse(localStorage.getItem(CLAVE)) || [];
+    } catch (e) {
+        guardados = [];
+    }
+}
+
+function persistir() {
+    try {
+        localStorage.setItem(CLAVE, JSON.stringify(guardados));
+        return true;
+    } catch (e) {
+        return false;
+    }
+}
+
+function bajar(url, nombre) {
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = nombre + '.png';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+}
+
+function dibujarGaleria() {
+    galeria.innerHTML = '';
+    if (guardados.length === 0) {
+        galeria.innerHTML = '<p class="galeria-vacia">Aún no has guardado ningún diseño.</p>';
+        return;
+    }
+    guardados.forEach(function (url, i) {
+        var item = document.createElement('div');
+        item.className = 'item';
+        var foto = document.createElement('img');
+        foto.src = url;
+        foto.alt = 'Diseño ' + (guardados.length - i);
+        item.appendChild(foto);
+
+        var botones = document.createElement('div');
+        botones.className = 'item-botones';
+        var bBajar = document.createElement('button');
+        bBajar.type = 'button';
+        bBajar.textContent = 'Descargar';
+        bBajar.addEventListener('click', function () { bajar(url, 'panam-diseno-' + (guardados.length - i)); });
+        var bQuitar = document.createElement('button');
+        bQuitar.type = 'button';
+        bQuitar.textContent = 'Quitar';
+        bQuitar.addEventListener('click', function () {
+            guardados.splice(i, 1);
+            persistir();
+            dibujarGaleria();
+        });
+        botones.appendChild(bBajar);
+        botones.appendChild(bQuitar);
+        item.appendChild(botones);
+        galeria.appendChild(item);
+    });
+}
+
+document.getElementById('btnGuardar').addEventListener('click', function () {
+    if (!zona) return;
+    guardados.unshift(canvas.toDataURL('image/png'));
+    if (!persistir()) {
+        alert('No hay espacio para guardar más diseños en el navegador. Descarga o quita alguno.');
+    }
+    dibujarGaleria();
+});
+
+document.getElementById('btnDescargar').addEventListener('click', function () {
+    if (!zona) return;
+    bajar(canvas.toDataURL('image/png'), 'mi-panam');
+});
+
+cargar();
+dibujarGaleria();
+</script>
+</body>
+</html>

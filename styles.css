@@ -1,0 +1,370 @@
+:root {
+    --color-principal: #111;
+    --color-acento: #e63946;
+    --color-fondo: #fff;
+    --color-gris: #f4f4f4;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    line-height: 1.6;
+    color: var(--color-principal);
+    background: var(--color-fondo);
+}
+
+header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--color-fondo);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Logo con imagen */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.8rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+    text-decoration: none;
+    color: var(--color-principal);
+}
+
+.logo img {
+    height: 200px;
+    width: auto;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--color-principal);
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: var(--color-acento);
+}
+
+/* hero */
+#hero {
+    min-height: 90vh;
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+                url('tenis-stictch.webp');
+    background-size: cover;
+    background-position: center 30%;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #fff;
+    padding: 0 1rem;
+}
+
+#hero h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+#hero p {
+    font-size: 1.3rem;
+}
+
+.cta-button {
+    display: inline-block;
+    background-color: var(--color-acento);
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 1rem 2rem;
+    border-radius: 5px;
+    margin-top: 2rem;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.cta-button:hover {
+    background-color: #fff;
+    color: var(--color-acento);
+    transform: translateY(-3px);
+}
+
+/*Acerca pag principal */
+#acerca {
+    padding: 4rem 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+#acerca h2 {
+    margin-bottom: 1rem;
+}
+
+/* acerca pagina */
+#mision {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+}
+
+#mision h1 {
+    margin-bottom: 1.5rem;
+}
+
+#mision h2 {
+    margin-top: 2.5rem;
+    margin-bottom: 0.8rem;
+}
+
+#mision p {
+    line-height: 1.8;
+    margin-bottom: 1.2rem;
+}
+
+#mision ul {
+    line-height: 1.8;
+    padding-left: 1.5rem;
+    margin-bottom: 1.2rem;
+}
+
+#mision li {
+    margin-bottom: 0.6rem;
+}
+
+.imagen-mision {
+    display: block;
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    margin: 2rem auto;
+    border-radius: 10px;
+}
+
+/* ===== Catálogo ===== */
+#catalogo {
+    padding: 4rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+#catalogo h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 2rem;
+}
+
+.catalogo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.catalogo-card h3 {
+    margin-top: 0.8rem;
+}
+
+.precio {
+    color: var(--color-acento);
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+/* ===== Carrusel ===== */
+.carousel {
+    position: relative;
+    max-width: 700px;
+    margin: 30px auto;
+}
+
+.carousel-viewport {
+    overflow: hidden;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.carousel-track {
+    display: flex;
+    transition: transform 0.5s ease;
+}
+
+.carousel-slide {
+    flex: 0 0 100%;
+    text-align: center;
+    padding: 10px;
+}
+
+.carousel-slide img {
+    width: 100%;
+    height: 510px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.carousel-btn {
+    position: absolute;
+    top: 45%;
+    transform: translateY(-50%);
+    z-index: 2;
+    width: 44px;
+    height: 44px;
+    border: none;
+    border-radius: 60%;
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.carousel-btn:hover {
+    background: rgba(0, 0, 0, 0.85);
+}
+
+.carousel-btn.prev { left: 10px; }
+.carousel-btn.next { right: 10px; }
+
+.carousel-dots {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border: none;
+    border-radius: 50%;
+    background: #ccc;
+    cursor: pointer;
+    padding: 0;
+}
+
+.dot.active {
+    background: var(--color-acento);
+}
+
+/* ===== Registro ===== */
+#registro {
+    padding: 4rem 2rem;
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+#registro h2 {
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+}
+
+.form-registro {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.form-registro input,
+.form-registro textarea {
+    width: 100%;
+    padding: 0.9rem 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.form-registro input:focus,
+.form-registro textarea:focus {
+    outline: none;
+    border-color: var(--color-acento);
+}
+
+.form-registro .cta-button {
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 0;
+}
+
+/* ===== Footer ===== */
+footer {
+    background: var(--color-principal);
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+    margin-top: 40px;
+}
+
+
+@media (max-width: 600px) {
+    nav {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+
+    #hero h1 {
+        font-size: 2rem;
+    }
+
+    .carousel-slide img {
+        height: 280px;
+    }
+}
+header {
+    border-bottom: 12px solid var(--color-acento);
+}
+.nav-links li + li {
+    border-left: 1px solid #0f0f0f;
+    padding-left: 2rem;
+}
+.redes {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.redes a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.01rem;
+}
+
+.redes a:hover {
+    color: var(--color-acento);
+}
+footer img {
+    width: 50px !important;
+    height: 50px !important;
+    max-width: 50px;
+    object-fit: contain;
+}
