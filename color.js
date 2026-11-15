@@ -112,3 +112,14 @@ document.getElementById('btnDescargar').addEventListener('click', function () {
 
 cargar();
 dibujarGaleria();
+var btnEnviarDiseno = document.getElementById('btn-enviar-diseno');
+var mensajeDiseno = document.getElementById('mensaje-diseno');
+
+btnEnviarDiseno.addEventListener('click', function () {
+    mensajeDiseno.textContent = '✔ Tu diseño se ha enviado a Panam. ¡Gracias por tu creatividad!';
+    mensajeDiseno.classList.add('visible');
+
+    setTimeout(function () {
+        mensajeDiseno.classList.remove('visible');
+    }, 5000);
+});

@@ -31,3 +31,32 @@
 @media (max-width: 800px) {
     .layout { grid-template-columns: 1fr; }
 }
+.btn-enviar-diseno {
+    background: #fff;
+    color: #e63946;
+    border: 2px solid #e63946;
+    padding: 0.9rem 1.6rem;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+.btn-enviar-diseno:hover {
+    background: #e63946;
+    color: #fff;
+}
+.mensaje-diseno {
+    display: none;
+    margin: 1rem auto 0;
+    padding: 1rem;
+    max-width: 520px;
+    border-radius: 5px;
+    background: #e8f5e9;
+    color: #1b5e20;
+    font-weight: bold;
+    text-align: center;
+}
+.mensaje-diseno.visible {
+    display: block;
+}
