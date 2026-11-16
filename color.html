@@ -35,6 +35,9 @@
         .item-botones button { flex: 1; padding: 0.4rem; border: 1px solid #ccc; border-radius: 5px; background: #fff; cursor: pointer; font-size: 0.85rem; }
         .item-botones button:hover { border-color: #e63946; color: #e63946; }
 
+        .mensaje-diseno { display: none; margin: 1.2rem auto 0; padding: 1rem; max-width: 520px; border-radius: 5px; background: #e8f5e9; color: #1b5e20; font-weight: bold; text-align: center; }
+        .mensaje-diseno.visible { display: block; }
+
         @media (max-width: 800px) {
             .layout { grid-template-columns: 1fr; }
         }
@@ -49,7 +52,7 @@
             <ul class="nav-links">
                 <li><a href="index.html">Inicio</a></li>
                 <li><a href="acerca.html">Acerca</a></li>
-                <li><a href="catalogo.html" target="_blank" rel="noopener">Catálogo</a></li>
+                <li><a href="https://panam.com.mx/collections/lo-mas-nuevo" target="_blank" rel="noopener">Catálogo</a></li>
                 <li><a href="prototipo.html">Prototipo</a></li>
                 <li><a href="index.html#registro">Registro</a></li>
             </ul>
@@ -84,12 +87,12 @@
                     </div>
 
                     <div class="acciones">
-                        <button type="button" id="btn-enviar-diseno" class="btn-enviar-diseno">Enviar a Panam</button>
-<p id="mensaje-diseno" class="mensaje-diseno" role="status"></p>
                         <button type="button" class="cta-button" id="btnGuardar">Guardar en la galería</button>
                         <button type="button" class="cta-button secundario" id="btnDescargar">Descargar imagen</button>
                         <button type="button" class="cta-button secundario" id="btnReiniciar">Empezar de nuevo</button>
+                        <button type="button" class="cta-button" id="btnEnviar">Enviar a Panam</button>
                     </div>
+                    <p class="mensaje-diseno" id="mensajeDiseno" role="status"></p>
                 </div>
 
                 <aside class="galeria">
@@ -201,17 +204,17 @@ function iniciar() {
     var N = W * H;
     var i, p, x, y;
 
-   
+    /* 1. donde hay linea (oscuro) */
     var oscuro = new Uint8Array(N);
     for (i = 0; i < N; i++) {
         var gris = 0.299 * datos[i * 4] + 0.587 * datos[i * 4 + 1] + 0.114 * datos[i * 4 + 2];
         oscuro[i] = gris < 150 ? 1 : 0;
     }
 
- 
+    /* 2. engrosar las lineas para cerrar huecos de las costuras punteadas */
     var barrera = dilatar(oscuro, W, H, Math.round(1.5 * esc));
 
-  
+    /* 3. separar zonas: cada espacio cerrado por lineas es una zona */
     zona = new Int32Array(N);
     var tam = [0];
     var pila = new Int32Array(N);
@@ -235,13 +238,13 @@ function iniciar() {
         }
     }
 
-    
+    /* 4. las manchitas muy chicas (entre puntos de costura) se unen a la zona vecina */
     var minimo = 150 * esc * esc / 4;
     for (i = 0; i < N; i++) {
         if (zona[i] > 0 && tam[zona[i]] < minimo) zona[i] = 0;
     }
 
-    
+    /* 5. los pixeles de las lineas y manchitas toman la zona mas cercana, sin huecos blancos */
     var cola = new Int32Array(N);
     var ini = 0, fin = 0;
     for (i = 0; i < N; i++) { if (zona[i] > 0) cola[fin++] = i; }
@@ -400,6 +403,18 @@ document.getElementById('btnGuardar').addEventListener('click', function () {
 document.getElementById('btnDescargar').addEventListener('click', function () {
     if (!zona) return;
     bajar(canvas.toDataURL('image/png'), 'mi-panam');
+});
+
+/* ---------- Enviar a Panam ---------- */
+var mensajeDiseno = document.getElementById('mensajeDiseno');
+
+document.getElementById('btnEnviar').addEventListener('click', function () {
+    if (!zona) return;
+    mensajeDiseno.textContent = ' Tu diseño se ha enviado a Panam. ¡Gracias por tu creatividad!';
+    mensajeDiseno.classList.add('visible');
+    setTimeout(function () {
+        mensajeDiseno.classList.remove('visible');
+    }, 5000);
 });
 
 cargar();
