@@ -17,7 +17,7 @@ body {
     border-bottom: 10px solid #e53935;
 }
 .menu-top .logo { display: block; }
-.menu-top .logo img { height: 110px; width: auto; display: block; }
+.menu-top .logo img { height: 200px; width: auto; display: block; }
 .menu-top ul { list-style: none; display: flex; align-items: center; flex-wrap: wrap; }
 .menu-top li + li { border-left: 1px solid #000; }
 .menu-top a.enlace {

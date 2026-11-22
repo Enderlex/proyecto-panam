@@ -60,3 +60,13 @@
 .mensaje-diseno.visible {
     display: block;
 }
+.video-contenedor {
+  display: flex;
+  justify-content: center;
+}
+
+video {
+  width: 100%;
+  max-width: 800px;
+  height: auto;
+}
