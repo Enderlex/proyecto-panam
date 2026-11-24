@@ -46,26 +46,41 @@ body {
 /* ===== PRODUCTOS ===== */
 .contenedor { max-width: 1200px; margin: 0 auto; padding: 40px 5vw 40px; }
 .titulo-seccion { font-size: 1.4rem; margin-bottom: 22px; font-weight: 800; }
+
 .rejilla {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
     gap: 24px;
+    width: 100%;
 }
+
 .tarjeta {
     background: #fff; border-radius: 14px; overflow: hidden;
     border: 1px solid #ecece8; text-align: center;
     display: flex; flex-direction: column;
+    margin: 0;
+    min-width: 0;
     transition: transform .25s, box-shadow .25s;
     scroll-margin-top: 90px;
 }
 .tarjeta:hover { transform: translateY(-6px); box-shadow: 0 14px 28px rgba(0,0,0,.12); }
 .tarjeta:target { outline: 3px solid #e53935; }
-.tarjeta .foto { aspect-ratio: 1 / 1; background: #fff; overflow: hidden; }
+
+/* Foto: cuadro fijo, el tenis se ve completo (usa "cover" si prefieres que llene todo) */
+.tarjeta .foto {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background: #f2f2f0;
+    overflow: hidden;
+}
 .tarjeta .foto img {
-    width: 100%; height: 100%; object-fit: cover; display: block;
+    width: 100%; height: 100%;
+    object-fit: contain;
+    display: block;
     transition: transform .4s;
 }
 .tarjeta:hover .foto img { transform: scale(1.06); }
+
 .tarjeta .datos { padding: 16px 16px 20px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
 .tarjeta h2 { font-size: 1.05rem; font-weight: 700; }
 .tarjeta .precio { color: #e53935; font-weight: 800; font-size: 1.25rem; }
@@ -105,7 +120,7 @@ footer img {
 }
 footer p { color: #fff; }
 
-/* ===== CELULAR ===== */
+/* ===== CELULAR (siempre al final para que tenga prioridad) ===== */
 @media (max-width: 600px) {
     .menu-top { justify-content: center; padding: 24px 5vw 28px; }
     .menu-top .logo img { height: 80px; }
